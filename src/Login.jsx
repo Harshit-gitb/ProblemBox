@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import app from "./firebase";
+import app from "./Firebase";
 
 const auth = getAuth(app);
 
