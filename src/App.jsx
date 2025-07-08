@@ -5,7 +5,6 @@ import Sidebar from "./components/Sidebar.jsx"
 function App() {
   return (
     <div>
-    <Sidebar />
       <h1 style={{ textAlign: "center" }}>ProblemBox 🔐</h1>
       {/* <Signup /> */}
       <hr />
