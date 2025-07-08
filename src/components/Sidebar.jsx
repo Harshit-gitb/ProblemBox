@@ -1,12 +1,13 @@
 import React from 'react'
-
-const sidebar = () => {
+import "../styles/sidebar.css";
+const Sidebar = () => {
   return (
     <>
     <aside>
 
 <div className='top'>
     {/* logo */}
+    hello
 </div>
 <div className='links_sidebar'>
     {/* links dashboard etc */}
@@ -34,4 +35,4 @@ const sidebar = () => {
   )
 }
 
-export default sidebar
+export default Sidebar
