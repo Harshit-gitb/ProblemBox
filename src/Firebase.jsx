@@ -1,7 +1,5 @@
-// src/firebase.js
 import { initializeApp } from "firebase/app";
 
-// Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyD9Ow5FIll38ol-rGZlkSPsFzsHBTSAEvM",
   authDomain: "problem-box-42582.firebaseapp.com",
