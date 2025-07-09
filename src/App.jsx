@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Signup from "./Signup.jsx";
 import Login from "./Login.jsx";
 import Sidebar from "./components/Sidebar.jsx"
+import Raiseissue from "./components/Raiseissue.jsx";
 function App() {
   return (
     <div>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
+      <Raiseissue/>
     </div>
   );
 }

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import app from "./Firebase.jsx";
+import { saveUserToFirestore } from "./utils/firestoreHelpers";
 
 const auth = getAuth(app);
 
@@ -12,7 +13,13 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      console.log("User created:", user);
+
+       await saveUserToFirestore(user);
+
       alert("Signup successful!");
     } catch (error) {
       alert("Signup error: " + error.message);
