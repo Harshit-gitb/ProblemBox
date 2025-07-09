@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Sidebar from "./Sidebar.jsx";
 const Raiseissue = () => {
   const [formData, setFormData] = useState({
     title: '',
@@ -86,6 +86,10 @@ const Raiseissue = () => {
   };
 
   return (
+
+    <>
+          
+
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -214,6 +218,7 @@ const Raiseissue = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
