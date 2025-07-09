@@ -6,6 +6,8 @@ import Login from "./Login.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import Raiseissue from "./components/Raiseissue.jsx";
+import AdminPanel from "./components/AdminPanel.jsx"; // create this file
+
 function App() {
   return (
     <div>
@@ -16,6 +18,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/raiseissue" element={<Raiseissue />} />
+              <Route path="/adminpanel" element={<AdminPanel />} /> {/* ✅ */}
               {/* <Route path="/reportedissue" element={<ReportedIssue />} />
               <Route path="/adminpanel" element={<AdminPanel />} />
               <Route path="/userdashboard" element={<UserDashboard />} />
