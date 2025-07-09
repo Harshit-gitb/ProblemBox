@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Sidebar from "./Sidebar.jsx";
 import { getAuth, signOut } from "firebase/auth";
 import app from "../Firebase.jsx"; // or './firebase' if it's in the same folder
 
