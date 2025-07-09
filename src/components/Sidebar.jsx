@@ -1,13 +1,21 @@
 import React from 'react'
 import "../styles/sidebar.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faGear,
+  faSignOutAlt,
+  faUser,
+  faBug,
+  faUserShield
+} from '@fortawesome/free-solid-svg-icons';
+
 const Sidebar = () => {
   return (
     <>
     <aside>
 
 <div className='top'>
-    {/* logo */}
-    hello
+    ProblemBox 🔐
 </div>
 <div className='links_sidebar'>
     {/* links dashboard etc */}
@@ -28,9 +36,15 @@ const Sidebar = () => {
     </button>
 </div>
 <div className='botttom'>
-    {/* logout */}
+    <button>
+        Settings
+    </button>
+<button>
+    Logout
+</button>
 </div>
     </aside>
+ 
     </>
   )
 }
