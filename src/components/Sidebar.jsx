@@ -1,23 +1,25 @@
-import React from 'react';
+import React from "react";
 import "../styles/sidebar.css";
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import app from "../Firebase.jsx"; // make sure the casing matches your actual file name
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGear,
   faSignOutAlt,
   faUser,
   faBug,
-  faUserShield
-} from '@fortawesome/free-solid-svg-icons';
-import Dashboard from './Dashboard';
+  faUserShield,
+} from "@fortawesome/free-solid-svg-icons";
+import Dashboard from "./Dashboard";
+import { useState } from "react";
 
-const Sidebar = () => {
+const Sidebar = ({setActivePage}) => {
   const navigate = useNavigate();
   const auth = getAuth(app);
-
+    
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
@@ -31,52 +33,71 @@ const Sidebar = () => {
 
   return (
     <>
-    <aside className='sidebar'>
+      <aside className="sidebar">
+        <div className="top">ProblemBox 🔐</div>
+        <div className="links_sidebar">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+                isActive ? "sidebar_button active" : "sidebar_button"
+        }
+        onClick={() => setActivePage("Dashboard")}
+          >
+            Dashboard
+          </NavLink>
+          <NavLink
+            to="/raiseissue"
+            className={({ isActive }) =>
+                isActive ? "sidebar_button active " : "sidebar_button"
+        }
+        onClick={() => setActivePage("Raise Issue")}
+          >
+            Raise Issue
+          </NavLink>
+          <NavLink
+            to="/reportedissue"
+            className={({ isActive }) =>
+                isActive ? "sidebar_button active " : "sidebar_button"
+        }
+        onClick={() => setActivePage("Reported Issue")}
+          >
+            Reported Issue
+          </NavLink>
+          <NavLink
+            to="/adminpanel"
+            className={({ isActive }) =>
+                isActive ? "sidebar_button active " : "sidebar_button"
+        }
+        onClick={() => setActivePage("Admin Panel")}
+          >
+            Admin Panel
+          </NavLink>
+          <NavLink
+            to="/userdashboard"
+            className={({ isActive }) =>
+                isActive ? "sidebar_button active " : "sidebar_button"
+        }
+        onClick={() => setActivePage("User Dashboard")}
+          >
+            User Dashboard
+          </NavLink>
 
-<div className='top'>
-    ProblemBox 🔐
-</div>
-<div className='links_sidebar'>
-    {/* links dashboard etc */}
-    <Link to="/">
-    <button className='sidebar_button'>
-        Dashboard
-    </button>
-    </Link>
-    <Link to="/raiseissue">
-    <button className='sidebar_button'>
-        Raise issue
-    </button>
-    </Link>
-    <Link to="/reportedissue">
-    <button className='sidebar_button'>
-        Reported issue
-    </button>
-    </Link>
-    <Link to="/adminpanel">
-    <button className='sidebar_button'>
-        Admin panel
-    </button>
-    </Link>
-    <Link to="/userdashboard">
-    <button className='sidebar_button'>
-        User Dashboard
-    </button>
-    </Link>
-</div>
-<div className='botttom'>
-    <Link to="/settings">
-    <button>
-        Settings
-    </button>
-    </Link>
-    <Link to="/logout">
-<button>
-    Logout
-</button>
-    </Link>
-</div>
-    </aside>
+        </div>
+        <div className="botttom">
+          <NavLink
+            to="/settings"
+            className={({ isActive }) =>
+                isActive ? "sidebar_button active " : "sidebar_button"
+        }
+        onClick={() => setActivePage("Settings")}
+          >
+            Settings
+          </NavLink>
+          <Link to="/logout">
+            <button>Logout</button>
+          </Link>
+        </div>
+      </aside>
     </>
   );
 };
