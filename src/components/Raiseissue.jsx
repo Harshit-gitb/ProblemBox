@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import Sidebar from "./Sidebar.jsx";
+import { getAuth, signOut } from "firebase/auth";
+import app from "../Firebase.jsx"; // or './firebase' if it's in the same folder
+
 
 const Raiseissue = () => {
   const [formData, setFormData] = useState({
@@ -86,6 +90,10 @@ const Raiseissue = () => {
   };
 
   return (
+
+    <>
+          
+
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -214,6 +222,7 @@ const Raiseissue = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
