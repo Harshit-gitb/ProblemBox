@@ -1,12 +1,12 @@
 // src/Login.jsx
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import app from "./Firebase.jsx";
+import app from "../Firebase.jsx";
 import { useNavigate } from "react-router-dom";
 
 const auth = getAuth(app);
 
-export default function Login() {
+export default function Login({setloggedin}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -16,8 +16,10 @@ export default function Login() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Login successful!");
+      setloggedin(true)
+      navigate('/page')
     } catch (error) {
-      alert("Login error: " + error.message);
+          alert("Login error: " + error.message);
     }
   };
 
@@ -38,10 +40,10 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit" style={styles.button}>Login</button>
-        <button type="button" style={styles.signupBtn} onClick={() => navigate('/signup')}>
+      </form>
+        <button className="w-65" type="button" style={styles.signupBtn} onClick={() => navigate('/signup')}>
           Don't have an account? Sign Up
         </button>
-      </form>
     </div>
   );
 }

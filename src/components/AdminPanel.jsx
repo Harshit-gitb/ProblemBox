@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
-import app from "../firebase"; // make sure the path is correct
+import app from "../Firebase.jsx"; // make sure the path is correct
 
 const db = getFirestore(app);
 const auth = getAuth(app);
@@ -72,9 +72,9 @@ const Votes = () => {
             <p><b>Status:</b> {issue.status || "Pen5ing"}</p>
             <div className="flex gap-2 mt-2 ">
               <button className="bg-green-300 px-2 py-1 rounded-lg" onClick={() => updateStatus(issue.id, "Resolved")}> Resolve</button>
-              <button className="bg-blue-300 px-2 py-1" onClick={() => updateStatus(issue.id, "In Progress")}> In Progress</button>
-              <button className="bg-red-300 px-2 py-1 " onClick={() => updateStatus(issue.id, "Rejected")}> Reject</button>
-              <button className="bg-red-400 px-2 py-1 text-white " onClick={() => deleteIssue(issue.id)}> Delete</button>
+              <button className="bg-blue-300 px-2 py-1 rounded-lg" onClick={() => updateStatus(issue.id, "In Progress")}> In Progress</button>
+              <button className="bg-red-300 px-2 py-1 rounded-lg " onClick={() => updateStatus(issue.id, "Rejected")}> Reject</button>
+              <button className="bg-red-400 px-2 py-1 text-white rounded-lg " onClick={() => deleteIssue(issue.id)}> Delete</button>
             </div>
           </div>
         ))}

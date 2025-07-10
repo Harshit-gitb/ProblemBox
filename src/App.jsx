@@ -1,48 +1,34 @@
-// src/App.jsx
-import React,{useState} from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import Sidebar from "./components/Sidebar.jsx";
-import Dashboard from "./components/Dashboard.jsx";
-import Raiseissue from "./components/Raiseissue.jsx";
-import ReportedIssue from "./components/ReportedIssue.jsx";
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Login from "./Pages/Login.jsx";
+import Signup from "./Pages/Signup.jsx";
+import Page from './Page.jsx'
+import Dashboard from "./Pages/Dashboard.jsx";
 import AdminPanel from "./components/AdminPanel.jsx";
-import Settings from "./components/Settings.jsx";
 import UserDashboard from "./components/UserDashboard.jsx";
-import Login from "./Login.jsx";
-
 
 function App() {
-  const [activePage, setActivePage] = useState("Dashboard");
-console.log(activePage);
+    const [Isloggedin, setloggedin] = useState(false)
+  const navigate = useNavigate();
 
   return (
-    <div>
-      <div style={{ display: "flex", minHeight: "100vh" }}>
-        <Sidebar 
-        setActivePage={setActivePage}
-        />
-        <div style={{ flex: 1, padding: "20px" }}>
-          <main className="main-content">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/raiseissue" element={<Raiseissue />} />
-              <Route path="/adminpanel" element={<AdminPanel />} /> {/* ✅ */}
-                <Route path="/userdashboard" element={<UserDashboard />} />
-               <Route path="/Login" element={<Login/>} />
+    <div >
+      <Routes>
+        <Route path="/login" element={<Login setloggedin={setloggedin}/>} />
+        <Route path="/" element={<Page />} />
+        <Route path="/signup" element={<Signup />} />
+         <Route path="/AdminPanel" element={<AdminPanel />} />
+         <Route path="/UserDashboard" element={<UserDashboard />} />
+         
 
-                
-              {/* <Route path="/reportedissue" element={<ReportedIssue />} />
-             <Route path="/reportedissue" element={<ReportedIssue />} />
-              <Route path="/adminpanel" element={<AdminPanel />} />
-            
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/logout" element={<div>Logging out...</div>} /> */} 
-            </Routes>
-          </main>
-        </div>
-      </div>
+
+
+      <Route path="*" element={ Isloggedin ? <Page></Page> : <Login setloggedin={setloggedin}/>} />
+      </Routes>
+      
     </div>
   );
-}
-
+} 
+  
 export default App;
