@@ -8,7 +8,6 @@ const Main = () => {
   return (
     <>
     <div >
-      
         <Sidebar />
         <div>
           <Routes>
