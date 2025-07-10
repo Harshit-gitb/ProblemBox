@@ -6,8 +6,11 @@ import Dashboard from "./components/Dashboard.jsx";
 import Raiseissue from "./components/Raiseissue.jsx";
 import ReportedIssue from "./components/ReportedIssue.jsx";
 import AdminPanel from "./components/AdminPanel.jsx";
-import UserDashboard from "./components/UserDashboard.jsx";
 import Settings from "./components/Settings.jsx";
+import UserDashboard from "./components/UserDashboard.jsx";
+import Login from "./Login.jsx";
+
+
 function App() {
   const [activePage, setActivePage] = useState("Dashboard");
 console.log(activePage);
@@ -24,10 +27,14 @@ console.log(activePage);
               <Route path="/" element={<Dashboard />} />
               <Route path="/raiseissue" element={<Raiseissue />} />
               <Route path="/adminpanel" element={<AdminPanel />} /> {/* ✅ */}
+                <Route path="/userdashboard" element={<UserDashboard />} />
+               <Route path="/Login" element={<Login/>} />
+
+                
               {/* <Route path="/reportedissue" element={<ReportedIssue />} />
              <Route path="/reportedissue" element={<ReportedIssue />} />
               <Route path="/adminpanel" element={<AdminPanel />} />
-              <Route path="/userdashboard" element={<UserDashboard />} />
+            
               <Route path="/settings" element={<Settings />} />
               <Route path="/logout" element={<div>Logging out...</div>} /> */} 
             </Routes>
