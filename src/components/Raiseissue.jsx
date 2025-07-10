@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import { getAuth, signOut } from "firebase/auth";
-import app from "../Firebase.jsx"; // or './firebase' if it's in the same folder
-
-=======
 import { submitIssue } from "../utils/firestoreHelpers";
 import { getAuth } from "firebase/auth";
->>>>>>> d759d553b228a43f95116a77307b3dcc0fc91e41
 
 const Raiseissue = () => {
   const [formData, setFormData] = useState({

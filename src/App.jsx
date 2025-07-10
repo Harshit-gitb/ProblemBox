@@ -23,7 +23,7 @@ console.log(activePage);
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/raiseissue" element={<Raiseissue />} />
-             <Route path="/reportedissue" element={<ReportedIssue />} />
+              <Route path="/reportedissue" element={<ReportedIssue />} />
               <Route path="/adminpanel" element={<AdminPanel />} />
               <Route path="/userdashboard" element={<UserDashboard />} />
               <Route path="/settings" element={<Settings />} />
