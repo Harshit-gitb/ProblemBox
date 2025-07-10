@@ -8,7 +8,7 @@ import Dashboard from "./Pages/Dashboard.jsx";
 
 function App() {
     const [Isloggedin, setloggedin] = useState(false)
-  const navigate = useNavigate();
+  const navigate = useNavigate("");
 
   return (
     <div >
@@ -16,8 +16,12 @@ function App() {
         <Route path="/login" element={<Login setloggedin={setloggedin}/>} />
         <Route path="/" element={<Page />} />
         <Route path="/signup" element={<Signup />} />
-      <Route path="*" element={ Isloggedin ? <Page></Page> : <Login setloggedin={setloggedin}/>} />
-      </Routes>
+        <Route path="/*" element={ Isloggedin ? <Page></Page> : <Login setloggedin={setloggedin}/>} />
+         <Route path="/dashboard" element={!Isloggedin ? <Login setloggedin={setloggedin} /> :<Dashboard />} />
+        <Route path="/raiseissue" element={!Isloggedin ? <Login setloggedin={setloggedin} /> : <Raiseissue />} />
+     
+      
+      </Routes> 
       
     </div>
   );
