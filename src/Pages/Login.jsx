@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app from "../Firebase.jsx";
 import { useNavigate } from "react-router-dom";
-
+import Page from "../Page.jsx";
+import { Link } from "react-router-dom";
 const auth = getAuth(app);
 
-export default function Login({setloggedin}) {
+export default function Login({ setloggedin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function Login({setloggedin}) {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Login successful!");
       setloggedin(true)
-      navigate('/page')
+      navigate(<Page />)
     } catch (error) {
           alert("Login error: " + error.message);
     }

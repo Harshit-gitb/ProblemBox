@@ -13,7 +13,6 @@ import {
   faBug,
   faUserShield,
 } from "@fortawesome/free-solid-svg-icons";
-import Dashboard from "./Dashboard";
 
 const Sidebar = ({setActivePage}) => {
   const navigate = useNavigate();
@@ -36,7 +35,7 @@ const Sidebar = ({setActivePage}) => {
         <div className="top">ProblemBox 🔐</div>
         <div className="links_sidebar">
           <NavLink
-            to="/"
+            to="/dashboard"
             className={({ isActive }) =>
                 isActive ? "sidebar_button active" : "sidebar_button"
         }
