@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import Sidebar from "./Sidebar.jsx";
-import { getAuth, signOut } from "firebase/auth";
-import app from "../Firebase.jsx"; // or './firebase' if it's in the same folder
-
+import { submitIssue } from "../utils/firestoreHelpers";
+import { getAuth } from "firebase/auth";
 
 const Raiseissue = () => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    infrastructure: '',
+    tag: '',
     priority: 'High'
   });
 
@@ -50,26 +48,35 @@ const Raiseissue = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    if (formData.title.trim() && formData.description.trim()) {
-      const newIssue = {
-        id: issues.length + 1,
-        title: formData.title,
-        tag: formData.infrastructure || 'General',
-        priority: formData.priority,
-        upvotes: 0,
-        downvotes: 0,
-        status: 'Open'
-      };
-      setIssues(prev => [...prev, newIssue]);
+  const handleSubmit = async () => {
+  if (formData.title.trim() && formData.description.trim()) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      alert("Please login to raise an issue.");
+      return;
+    }
+
+    try {
+      await submitIssue(formData, user.uid);
+      alert("Issue submitted successfully!");
+
       setFormData({
         title: '',
         description: '',
-        infrastructure: '',
+        tag: '',
         priority: 'High'
       });
+    } catch (err) {
+      console.error("Error submitting issue:", err);
+      alert("Failed to submit issue.");
     }
-  };
+  } else {
+    alert("Please fill all required fields.");
+  }
+};
+
 
   const getPriorityColor = (priority) => {
     switch(priority) {
@@ -149,7 +156,7 @@ const Raiseissue = () => {
               /> */}
 
               <select
-                name="issue_related"
+                name="tag"
                 value={formData.issue_related}
                 onChange={handleInputChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white"

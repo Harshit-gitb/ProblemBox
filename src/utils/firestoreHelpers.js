@@ -1,0 +1,53 @@
+// src/utils/firestoreHelpers.js
+import { db } from "../Firebase";
+import { setDoc, doc, addDoc, collection, updateDoc, increment, serverTimestamp } from "firebase/firestore";
+
+// Save user
+export const saveUserToFirestore = async (user) => {
+  try {
+    await setDoc(doc(db, "users", user.uid), {
+      name: user.displayName || "User",
+      email: user.email,
+      role: "user",
+      badge: "Bronze",
+      resolvedCount: 0,
+    });
+    console.log("User saved to Firestore!");
+  } catch (err) {
+    console.error("❌ Error saving user:", err);
+  }
+};
+
+
+// Submit an issue
+export const submitIssue = async (issueData, userId) => {
+  await addDoc(collection(db, "issues"), {
+    title: issueData.title,
+    description: issueData.description,
+    tag: issueData.tag,
+    priority: issueData.priority,
+    status: "Open",
+    createdBy: userId,
+    createdAt: serverTimestamp(),
+    upvotes: 0,
+    downvotes: 0
+  });
+};
+
+// Vote tracking
+export const voteOnIssue = async (issueId, userId, voteValue) => {
+  await setDoc(doc(db, "votes", `${issueId}_${userId}`), {
+    issueId,
+    userId,
+    vote: voteValue
+  });
+};
+
+// Update vote counts
+export const updateIssueVote = async (issueId, isUpvote) => {
+  const issueRef = doc(db, "issues", issueId);
+  await updateDoc(issueRef, {
+    upvotes: isUpvote ? increment(1) : increment(0),
+    downvotes: !isUpvote ? increment(1) : increment(0)
+  });
+};

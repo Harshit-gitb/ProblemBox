@@ -1,34 +1,26 @@
-// src/App.jsx
-import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import Signup from "./Signup.jsx";
-import Login from "./Login.jsx";
-import Sidebar from "./components/Sidebar.jsx";
-import Navbar from "./components/Navbar.jsx";
-import Dashboard from "./components/Dashboard.jsx";
-import Raiseissue from "./components/Raiseissue.jsx";
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Login from "./Pages/Login.jsx";
+import Signup from "./Pages/Signup.jsx";
+import Page from './Page.jsx'
+import Dashboard from "./Pages/Dashboard.jsx";
+
 function App() {
+    const [Isloggedin, setloggedin] = useState(false)
+  const navigate = useNavigate();
+
   return (
-    <div>
-      <Navbar></Navbar>
-      <div style={{ display: "flex", minHeight: "100vh" }}>
-        <Sidebar />
-        <div style={{ flex: 1, padding: "20px" }}>
-          <main className="main-content">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/raiseissue" element={<Raiseissue />} />
-              {/* <Route path="/reportedissue" element={<ReportedIssue />} />
-              <Route path="/adminpanel" element={<AdminPanel />} />
-              <Route path="/userdashboard" element={<UserDashboard />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/logout" element={<div>Logging out...</div>} /> */}
-            </Routes>
-          </main>
-        </div>
-      </div>
+    <div >
+      <Routes>
+        <Route path="/login" element={<Login setloggedin={setloggedin}/>} />
+        <Route path="/" element={<Page />} />
+        <Route path="/signup" element={<Signup />} />
+      <Route path="*" element={ Isloggedin ? <Page></Page> : <Login setloggedin={setloggedin}/>} />
+      </Routes>
+      
     </div>
   );
-}
-
+} 
+  
 export default App;

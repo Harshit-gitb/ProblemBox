@@ -12,7 +12,7 @@ import {
   faBug,
   faUserShield
 } from '@fortawesome/free-solid-svg-icons';
-import Dashboard from './Dashboard';
+import Dashboard from '../Pages/Dashboard.jsx';
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const Sidebar = () => {
 </div>
 <div className='links_sidebar'>
     {/* links dashboard etc */}
-    <Link to="/">
+    <Link to="/dashboard">
     <button className='sidebar_button'>
         Dashboard
     </button>

@@ -5,7 +5,8 @@ const Dashboard = () => {
   return (
     <>
 
-      hello
+     Dashboard
+      
     </>
   );
 };
