@@ -14,7 +14,6 @@ import {
   faUserShield,
 } from "@fortawesome/free-solid-svg-icons";
 import Dashboard from "./Dashboard";
-import { useState } from "react";
 
 const Sidebar = ({setActivePage}) => {
   const navigate = useNavigate();

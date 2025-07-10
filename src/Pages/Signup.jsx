@@ -1,14 +1,16 @@
 // src/Signup.jsx
 import React, { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import app from "./Firebase.jsx";
-import { saveUserToFirestore } from "./utils/firestoreHelpers";
+import app from "../Firebase.jsx";
+import { saveUserToFirestore } from "../utils/firestoreHelpers.js";
+import { useNavigate } from "react-router-dom";
 
 const auth = getAuth(app);
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -17,10 +19,9 @@ export default function Signup() {
       const user = userCredential.user;
 
       console.log("User created:", user);
-
-       await saveUserToFirestore(user);
-
+      await saveUserToFirestore(user);
       alert("Signup successful!");
+      navigate('/login')
     } catch (error) {
       alert("Signup error: " + error.message);
     }
@@ -43,6 +44,7 @@ export default function Signup() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit" style={styles.button}>Signup</button>
+        <button type="buttpn" onClick={()=> navigate('/login')} style={styles.button}>already Login?</button>
       </form>
     </div>
   );
