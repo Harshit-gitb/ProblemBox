@@ -29,8 +29,10 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login setloggedin={setloggedin}/>} />
         <Route path="/signup" element={<Signup />} />
-
-      <Route path="*" element={ Isloggedin ? <Page /> : <Login setloggedin={setloggedin}/>} />
+        <Route path="/Dashboard"/>
+        <Route path="/"/>
+        <Route path="/"/>
+        <Route path="/"/>
       </Routes>
       
     </div>
