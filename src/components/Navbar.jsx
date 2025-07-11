@@ -7,12 +7,12 @@ const Navbar = ({ setshowLogin }) => {
 
   return (
     <nav className="bg-white shadow-md px-6 py-4">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div className="text-xl md:text-2xl font-semibold text-gray-800">
           Issue Raise
         </div>
 
-        <div className="flex-1 mx-6 max-w-md">
+        <div className="flex-1 mx-6 max-w-md">  
           <input
             type="text"
             placeholder="Search..."
