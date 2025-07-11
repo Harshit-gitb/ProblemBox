@@ -1,10 +1,8 @@
-// src/Login.jsx
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app from "../Firebase.jsx";
 import { useNavigate } from "react-router-dom";
-import Page from "../Page.jsx";
-import { Link } from "react-router-dom";
+
 const auth = getAuth(app);
 
 export default function Login({ setloggedin }) {
@@ -17,10 +15,10 @@ export default function Login({ setloggedin }) {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Login successful!");
-      setloggedin(true)
-      navigate(<Page />)
+      setloggedin(true);
+      navigate("/page"); // ✅ Navigate by route path, not component
     } catch (error) {
-          alert("Login error: " + error.message);
+      alert("Login error: " + error.message);
     }
   };
 
@@ -42,9 +40,9 @@ export default function Login({ setloggedin }) {
         />
         <button type="submit" style={styles.button}>Login</button>
       </form>
-        <button type="button" style={styles.signupBtn} onClick={() => navigate('/signup')}>
-          Don't have an account? Sign Up
-        </button>
+      <button type="button" style={styles.signupBtn} onClick={() => navigate('/signup')}>
+        Don't have an account? Sign Up
+      </button>
     </div>
   );
 }
