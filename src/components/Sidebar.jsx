@@ -3,16 +3,8 @@ import "../styles/sidebar.css";
 import { Routes, Route, Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
-import app from "../Firebase.jsx"; // make sure the casing matches your actual file name
+import app from "../Firebase.jsx"; 
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGear,
-  faSignOutAlt,
-  faUser,
-  faBug,
-  faUserShield,
-} from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = ({setActivePage}) => {
   const navigate = useNavigate();
