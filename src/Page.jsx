@@ -3,7 +3,8 @@ import Sidebar from "./components/Sidebar.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Dashboard from "./Pages/Dashboard.jsx";
 import Raiseissue from "./Pages/Raiseissue.jsx";
-
+import Adminpanel from "./Pages/Adminpanel.jsx";
+import UserDashboard from "./Pages/UserDashboard.jsx"
 const Main = () => {
   return (
     <>
@@ -14,7 +15,7 @@ const Main = () => {
   </div>
 
   <div className="flex-1 flex flex-col overflow-hidden">
-    <div className="sticky top-0 h-16 z-20 bg-white shadow">
+    <div className="sticky top-0 h-16 z-120 bg-white shadow">
       <Navbar />
     </div>
 
@@ -22,6 +23,8 @@ const Main = () => {
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/raiseissue" element={<Raiseissue />} />
+        <Route path="/adminpanel" element={<Adminpanel />} />
+        <Route path="/userdashboard" element={<UserDashboard />} />
       </Routes>
     </div>
   </div>
