@@ -11,15 +11,18 @@ import { useNavigate } from "react-router-dom";
     const auth = getAuth(app);
       
     const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
       signOut(auth)
         .then(() => {
           alert("Logged out successfully!");
-          navigate("/"); // redirect to login
+          navigate("/login");
         })
         .catch((error) => {
           alert("Logout failed: " + error.message);
         });
-    };
+    }
+  };
 
     return (
       <>
@@ -84,7 +87,7 @@ import { useNavigate } from "react-router-dom";
               Settings
             </NavLink>
             <Link to="/logout">
-              <button>Logout</button>
+              <button onClick={handleLogout} >Logout</button>
             </Link>
           </div>
         </aside>

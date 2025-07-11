@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
-import app from "../firebase"; // make sure the path is correct
+import app from "./firebase"; // make sure the path is correct
 
 const db = getFirestore(app);
 const auth = getAuth(app);
