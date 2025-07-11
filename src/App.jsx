@@ -6,9 +6,7 @@ import Signup from "./Pages/Signup.jsx";
 import Page from './Page.jsx'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import app from "./Firebase.jsx";
-import Dashboard from "./Pages/Dashboard.jsx";
-import AdminPanel from "./components/AdminPanel.jsx";
-import UserDashboard from "./components/UserDashboard.jsx";
+
 
 function App() {
     const [Isloggedin, setloggedin] = useState(false)
