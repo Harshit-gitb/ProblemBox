@@ -8,6 +8,7 @@ import Page from "./Page.jsx";
 import Dashboard from "./Pages/Dashboard.jsx";
 
 
+
 function App() {
   const [Isloggedin, setloggedin] = useState(null);
   const auth = getAuth(app);
@@ -39,7 +40,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login setloggedin={setloggedin}/>} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={Isloggedin ? <Page></Page> : <Login setloggedin={setloggedin}></Login>}/>
+      <Route path="*" element={ Isloggedin ? <Page /> : <Login setloggedin={setloggedin}/>} />
       </Routes>
       
     </div>
