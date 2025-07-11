@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { submitIssue } from '../utils/firestoreHelpers';
+import { submitIssue } from "../utils/firestoreHelpers";
 import { getAuth } from "firebase/auth";
-
 
 const Raiseissue = () => {
   const [formData, setFormData] = useState({

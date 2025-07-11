@@ -5,7 +5,6 @@ import { NavLink } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import app from "../Firebase.jsx"; // make sure the casing matches your actual file name
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const Sidebar = ({setActivePage}) => {

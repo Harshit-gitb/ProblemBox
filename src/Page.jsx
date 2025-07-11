@@ -8,13 +8,15 @@ const Main = () => {
   return (
     <>
     <div >
-      hello
         <Sidebar />
         <div>
+          <Navbar/>
+          <div>
           <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/raiseissue" element={ <Raiseissue />} />
         </Routes>
+        </div>
         </div>  
     </div>
     </>
