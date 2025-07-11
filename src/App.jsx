@@ -8,22 +8,30 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import app from "./Firebase.jsx";
 import Dashboard from "./Pages/Dashboard.jsx";
 
+
 function App() {
-    const [Isloggedin, setloggedin] = useState(false)
-    const auth = getAuth(app)
+  const [Isloggedin, setloggedin] = useState(null);
+  const auth = getAuth(app);
   const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setloggedin(!!user);
+      // Redirect based on auth state
+      if (user) {
+        if (window.location.pathname === "/login" || window.location.pathname === "/signup") {
+          navigate("/", { replace: true });
+        }
+      } else {
+        if (window.location.pathname !== "/login" && window.location.pathname !== "/signup") {
+          navigate("/login", { replace: true });
+        }
+      }
     });
-
     return () => unsubscribe();
-  }, [auth]);
+  }, [auth, navigate]);
 
-  if (Isloggedin === null) {
-    return <div>Loading...</div>; // or a spinner
-  }
+ 
   return (
     <div >
       <Routes>
