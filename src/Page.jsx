@@ -3,6 +3,7 @@ import Sidebar from "./components/Sidebar.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Dashboard from "./Pages/Dashboard.jsx";
 import Raiseissue from "./Pages/Raiseissue.jsx";
+import ReportedIssue from "./Pages/ReportedIssue.jsx";
 import Adminpanel from "./Pages/Adminpanel.jsx";
 import UserDashboard from "./Pages/UserDashboard.jsx"
 const Main = () => {
@@ -23,6 +24,7 @@ const Main = () => {
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/raiseissue" element={<Raiseissue />} />
+        <Route path="/reportedissue" element={<ReportedIssue />} />
         <Route path="/adminpanel" element={<Adminpanel />} />
         <Route path="/userdashboard" element={<UserDashboard />} />
       </Routes>

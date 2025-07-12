@@ -32,7 +32,7 @@ const Raiseissue = () => {
       }
 
       try {
-        await submitIssue(formData, user.uid);
+        await submitIssue(formData, user.email);
         alert("Issue submitted successfully!");
         setFormData({
           title: "",

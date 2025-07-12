@@ -1,13 +1,13 @@
-.links_sidebar {
+/* .links_sidebar {
   display: flex;
   flex-direction: column;
   /* position: fixed; */
-  background-color: #84ae92;
+  /* background-color: #84ae92;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-}
-.botttom {
+} */ */
+/* .botttom {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,7 +29,7 @@
 }
 .sidebar_button.active {
   background-color: #ffffff; /* blue-500 */
-  color: rgb(0, 0, 0);
+  /* color: rgb(0, 0, 0);
   font-weight: bold;
 }
 
@@ -67,4 +67,4 @@
   background-color: #84ae92;
   position: sticky;
   top: 0px;
-}
+} */ 
