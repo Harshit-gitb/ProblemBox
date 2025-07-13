@@ -1,9 +1,9 @@
 .links_sidebar {
-  display: flex;
+  display: flex; 
   flex-direction: column;
   /* position: fixed; */
   background-color: #84ae92;
-  justify-content: center;
+  justify-content: ceanter;
   align-items: center;
   flex-grow: 1;
 }
@@ -68,3 +68,4 @@
   position: sticky;
   top: 0px;
 }
+

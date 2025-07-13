@@ -22,22 +22,22 @@ const Sidebar = () => {
   return (
     <>
       <aside className="sidebar">
-        <div className="top">ProblemBox 🔐</div>
+        <div className="top  ">ProblemBox</div>
         <div className="links_sidebar">
-          <div onClick={() => {navigate("/dashboard");}}> Dashboard
+          <div className="buttons" onClick={() => {navigate("/dashboard");}}> Dashboard
           </div>
-          <div onClick={() => navigate("/raiseissue")} >
+          <div className="buttons" onClick={() => navigate("/raiseissue")} >
             Raise Issue
           </div>
-          <div
+          <div className="buttons"
             onClick={() => navigate("/reportedissue")}>
             Reported Issue
           </div>
-          <div
+          <div className="buttons"
             onClick={() => navigate("/adminpanel")}>
             Admin Panel
           </div>
-          <div
+          <div  className="buttons"
             onClick={() => navigate("/userdashboard")}
           >
             User Dashboard

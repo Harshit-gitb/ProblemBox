@@ -5,6 +5,7 @@ import Dashboard from "./Pages/Dashboard.jsx";
 import Raiseissue from "./Pages/Raiseissue.jsx"
 import UserDashboard from "./Pages/UserDashboard.jsx"
 import AdminPanel from "./Pages/AdminPanel.jsx";
+import RightSidebar from './components/RightSidebar';
 
 const Main = () => {
   return (
@@ -28,6 +29,7 @@ const Main = () => {
       </Routes>
     </div>
   </div>
+  <RightSidebar/>
 </div>
 
     </>
