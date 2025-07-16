@@ -1,9 +1,12 @@
 import profile from "../assets/profile.png";
+import { useLocation } from "react-router-dom";
 
-const Navbar = ({ setshowLogin  , currentPath}) => {
+const Navbar = ({ setshowLogin  }) => {
   const loginHandler = () => {
     setshowLogin(true); // Hide sidebar and navbar
   };
+  const currLoc = useLocation();
+  const currentPath = currLoc.pathname
 
   const pageTitles = {
     "/": "Dashboard",
