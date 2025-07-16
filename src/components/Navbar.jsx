@@ -1,15 +1,23 @@
 import profile from "../assets/profile.png";
 
-const Navbar = ({ setshowLogin }) => {
+const Navbar = ({ setshowLogin  , currentPath}) => {
   const loginHandler = () => {
     setshowLogin(true); // Hide sidebar and navbar
   };
+
+  const pageTitles = {
+    "/": "Dashboard",
+    "/raiseissue": "Raise Issue",
+    "/reportedissue": "Reported Issue",
+  };
+
+  const title = pageTitles[currentPath] || "Problem Box"
 
   return (
     <nav className="bg-white shadow-md px-6 py-4">
       <div className="flex items-center justify-between">
         <div className="text-xl md:text-2xl font-semibold text-gray-800">
-          Issue Raise
+            {title}
         </div>
 
         <div className="flex-1 mx-6 max-w-md">  

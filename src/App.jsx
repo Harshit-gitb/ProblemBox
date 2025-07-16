@@ -6,6 +6,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import app from "./Firebase.jsx";
 import Page from "./Page.jsx";
 import Dashboard from "./Pages/Dashboard.jsx";
+import Layout from './components/Layout';
 
 
 
