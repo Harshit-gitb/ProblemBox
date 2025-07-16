@@ -11,11 +11,14 @@ import Layout from './components/Layout';
 
 
 function App() {
+  
+  const [username, setUsername] = useState("")
   const [Isloggedin, setloggedin] = useState(null);
   const auth = getAuth(app);
   const navigate = useNavigate();
   const location = useLocation();
-
+  
+  console.log(username);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setloggedin(!!user);
@@ -39,9 +42,9 @@ function App() {
   return (
     <div >
       <Routes>
-        <Route path="/login" element={<Login setloggedin={setloggedin}/>} />
+        <Route path="/login" element={<Login setloggedin={setloggedin} setUsername={setUsername}/>} />
         <Route path="/signup" element={<Signup />} />
-      <Route path="*" element={ Isloggedin ? <Page /> : <Login setloggedin={setloggedin}/>} />
+      <Route path="*" element={ Isloggedin ? <Page username={username} /> : <Login setloggedin={setloggedin} setUsername={setUsername}/>} />
       </Routes>++
       
     </div>
