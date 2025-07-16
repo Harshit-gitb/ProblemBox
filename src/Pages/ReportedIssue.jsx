@@ -4,7 +4,12 @@ import {
   getFirestore,
   collection,
   onSnapshot,
+  updateDoc,
+  deleteDoc,
+  doc,
+  increment
 } from "firebase/firestore";
+
 import app from "../Firebase.jsx";
 import {
   voteOnIssue,
@@ -18,6 +23,7 @@ const auth = getAuth(app);
 export default function ReportedIssue() {
   const [issues, setIssues] = useState([]);
   const [userVotes, setUserVotes] = useState({});
+  const [voting, setVoting] = useState(false);
   const user = auth.currentUser;
 
   useEffect(() => {
@@ -50,45 +56,54 @@ export default function ReportedIssue() {
 
 const handleVote = async (issueId, isUpvote) => {
   if (!user) return alert("Login required");
+  if (voting) return; // 👈 prevent spamming
 
-  const existingVote = userVotes[issueId];
+  setVoting(true); // 🔒 Lock
 
-  // Unvote case
-  if (
-    (isUpvote && existingVote === "upvote") ||
-    (!isUpvote && existingVote === "downvote")
-  ) {
-    // Remove vote from Firestore
-    await deleteDoc(doc(db, "votes", `${issueId}_${user.uid}`));
-
-    // Decrement vote count on issue
+  try {
+    const existingVote = userVotes[issueId];
+    const voteDocId = `${issueId}_${user.uid}`;
     const issueRef = doc(db, "issues", issueId);
-    await updateDoc(issueRef, {
-      upvotes: isUpvote ? increment(-1) : increment(0),
-      downvotes: !isUpvote ? increment(-1) : increment(0),
-    });
 
-    return;
+    // Unvote
+    if (
+      (isUpvote && existingVote === "upvote") ||
+      (!isUpvote && existingVote === "downvote")
+    ) {
+      await deleteDoc(doc(db, "votes", voteDocId));
+      await updateDoc(issueRef, {
+        upvotes: isUpvote ? increment(-1) : increment(0),
+        downvotes: !isUpvote ? increment(-1) : increment(0),
+      });
+      return;
+    }
+
+    // Switch vote
+    if (
+      (isUpvote && existingVote === "downvote") ||
+      (!isUpvote && existingVote === "upvote")
+    ) {
+      await updateDoc(issueRef, {
+        upvotes: isUpvote ? increment(1) : increment(-1),
+        downvotes: isUpvote ? increment(-1) : increment(1),
+      });
+    } else {
+      // New vote
+      await updateDoc(issueRef, {
+        upvotes: isUpvote ? increment(1) : increment(0),
+        downvotes: !isUpvote ? increment(1) : increment(0),
+      });
+    }
+
+    await voteOnIssue(issueId, user.uid, isUpvote ? "upvote" : "downvote");
+  } catch (error) {
+    console.error("Voting error:", error);
+  } finally {
+    setVoting(false); // 🔓 Unlock
   }
-
-  // If user had opposite vote earlier, adjust both
-  if (
-    (isUpvote && existingVote === "downvote") ||
-    (!isUpvote && existingVote === "upvote")
-  ) {
-    const issueRef = doc(db, "issues", issueId);
-    await updateDoc(issueRef, {
-      upvotes: isUpvote ? increment(1) : increment(-1),
-      downvotes: isUpvote ? increment(-1) : increment(1),
-    });
-  } else {
-    // Fresh vote
-    await updateIssueVote(issueId, isUpvote);
-  }
-
-  // Set vote document
-  await voteOnIssue(issueId, user.uid, isUpvote ? "upvote" : "downvote");
 };
+
+
 
 
   const getStatusBadge = (status) => {
