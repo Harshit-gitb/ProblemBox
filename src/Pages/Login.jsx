@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const auth = getAuth(app);
 
-export default function Login({ setloggedin }) {
+export default function Login({ setloggedin,setUsername}) {
+  // const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -13,8 +14,11 @@ export default function Login({ setloggedin }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      alert("Login successful!");
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const useremail = userCredential.user.email;
+      const username = useremail.split('@')[0];
+      setUsername(username); // Set username from email
+      alert(`Login successful!`);
       setloggedin(true);
       navigate("/page"); // ✅ Navigate by route path, not component
     } catch (error) {

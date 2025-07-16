@@ -7,11 +7,14 @@ import Page from "./Page.jsx";
 import AuthFlipCard from "./Pages/AuthFlipCard"; // ✅ updated path
 
 function App() {
+  
+  const [username, setUsername] = useState("")
   const [Isloggedin, setloggedin] = useState(null);
   const auth = getAuth(app);
   const navigate = useNavigate();
   const location = useLocation();
-
+  
+  console.log(username);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setloggedin(!!user);
@@ -35,9 +38,11 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/auth" element={<AuthFlipCard setloggedin={setloggedin} />} />
-        <Route path="*" element={Isloggedin ? <Page /> : <AuthFlipCard setloggedin={setloggedin} />} />
+        <Route path="/auth" element={<AuthFlipCard setloggedin={setloggedin} setUsername={setUsername}/>} />
+        
+      <Route path="*" element={ Isloggedin ? <Page username={username} /> : <AuthFlipCard setloggedin={setloggedin} setUsername={setUsername}/>} />
       </Routes>
+      
     </div>
   );
 }

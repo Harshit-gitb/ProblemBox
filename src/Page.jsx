@@ -8,7 +8,7 @@ import Adminpanel from "./Pages/Adminpanel.jsx";
 import UserDashboard from "./Pages/UserDashboard.jsx";
 import RightSidebar from './components/RightSidebar';
 
-const Main = () => {
+const Main = ({ username }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br  from-[#fffdf2] to-[#faecd6]">
       <div className="flex h-screen w-full">
@@ -23,7 +23,7 @@ const Main = () => {
           
           {/* Navbar */}
           <div className="sticky top-0 h-16 z-50 bg-[#fffdf5] shadow-md border-b border-yellow-100">
-            <Navbar />
+            <Navbar username={username} />
           </div>
           
           {/* Page Routes */}
@@ -37,11 +37,7 @@ const Main = () => {
             </Routes>
           </div>
         </div>
-
-        {/* Right Sidebar */}
-        <div className="hidden lg:block bg-[#fff7e0] shadow-md">
-          <RightSidebar />
-        </div>
+  
       </div>
     </div>
   );
