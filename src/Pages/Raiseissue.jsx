@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { submitIssue } from "../utils/firestoreHelpers";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 const Raiseissue = () => {
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    tag: '',
-    priority: 'High'
+    title: "",
+    description: "",
+    tag: "",
+    priority: "High",
   });
 
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -32,13 +32,13 @@ const Raiseissue = () => {
       }
 
       try {
-        await submitIssue(formData, user.uid);
+        await submitIssue(formData, user.email);
         alert("Issue submitted successfully!");
         setFormData({
-          title: '',
-          description: '',
-          tag: '',
-          priority: 'High'
+          title: "",
+          description: "",
+          tag: "",
+          priority: "High",
         });
       } catch (err) {
         console.error("Error submitting issue:", err);
@@ -62,28 +62,14 @@ const Raiseissue = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className=" bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto">
-
-        {/* Header */}
-        <div className="bg-white rounded-lg shadow-sm mb-6 p-4 flex justify-between items-center">
-          <div className="flex items-center">
-            <div className="w-6 h-6 bg-gray-800 rounded mr-3"></div>
-            <h1 className="text-xl font-semibold text-gray-900">Problem Box</h1>
-          </div>
-          <div className="flex space-x-2">
-            <button onClick={handleLogin} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm">
-              Login
-            </button>
-            <button onClick={handleLogout} className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded text-sm">
-              Logout
-            </button>
-          </div>
-        </div>
 
         {/* Raise an Issue Form */}
         <div className="bg-red-50 rounded-lg p-6 mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Raise an Issue</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            Raise an Issue
+          </h2>
           <div className="space-y-4">
             <input
               type="text"
@@ -109,10 +95,18 @@ const Raiseissue = () => {
             >
               <option value="">Select Tag</option>
               <option value="HR_Employee_Issues">HR & Employee Issues</option>
-              <option value="Office_Infrastructure_Issues">Office Infrastructure Issues</option>
-              <option value="Office_Supplies_Assets">Office Supplies & Assets</option>
-              <option value="Training_Access_Issues">Training & Access Issues</option>
-              <option value="Administrative_Process_Issues">Administrative/Process Issues</option>
+              <option value="Office_Infrastructure_Issues">
+                Office Infrastructure Issues
+              </option>
+              <option value="Office_Supplies_Assets">
+                Office Supplies & Assets
+              </option>
+              <option value="Training_Access_Issues">
+                Training & Access Issues
+              </option>
+              <option value="Administrative_Process_Issues">
+                Administrative/Process Issues
+              </option>
               <option value="others">Others</option>
             </select>
             <select

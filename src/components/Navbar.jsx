@@ -1,18 +1,29 @@
 import profile from "../assets/profile.png";
+import { useLocation } from "react-router-dom";
 
-const Navbar = ({ setshowLogin }) => {
+const Navbar = ({ setshowLogin  }) => {
   const loginHandler = () => {
     setshowLogin(true); // Hide sidebar and navbar
   };
+  const currLoc = useLocation();
+  const currentPath = currLoc.pathname
+
+  const pageTitles = {
+    "/": "Dashboard",
+    "/raiseissue": "Raise Issue",
+    "/reportedissue": "Reported Issue",
+  };
+
+  const title = pageTitles[currentPath] || "Problem Box"
 
   return (
     <nav className="bg-white shadow-md px-6 py-4">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div className="text-xl md:text-2xl font-semibold text-gray-800">
-          Issue Raise
+            {title}
         </div>
 
-        <div className="flex-1 mx-6 max-w-md">
+        <div className="flex-1 mx-6 max-w-md">  
           <input
             type="text"
             placeholder="Search..."

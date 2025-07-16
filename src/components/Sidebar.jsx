@@ -1,11 +1,19 @@
-import { React, useState } from "react";
-import "../styles/sidebar.css";
-import { Routes, Route, Link } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import app from "../Firebase.jsx";
-import { useNavigate } from "react-router-dom";
+import {
+  faTachometerAlt,
+  faPlus,
+  faExclamationCircle,
+  faUserShield,
+  faUser,
+  faCog,
+  faSignOutAlt
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Sidebar = () => {
+export default function Sidebar() {
   const navigate = useNavigate();
   const auth = getAuth(app);
   const [activeLink, setActiveLink] = useState("dashboard");
@@ -13,57 +21,59 @@ const Sidebar = () => {
     signOut(auth)
       .then(() => {
         alert("Logged out successfully!");
-        navigate("/"); // redirect to login
+        navigate("/login");
       })
-      .catch((error) => {
-        alert("Logout failed: " + error.message);
-      });
+      .catch((error) => alert("Logout failed: " + error.message));
   };
 
-  return (
-    <>
-      <aside className="sidebar">
-        <div className="top">ProblemBox 🔐</div>
-        <div className="links_sidebar">
-          <div className="sidebar_button"
-            onClick={() => {
-              navigate("/dashboard");
-            }}
-          >
-            Dashboard
-          </div>
-          <div className="sidebar_button {activeLink === 'dashboard'"
-            onClick={() => navigate("/raiseissue")}
-          >
-            Raise Issue
-          </div>
-          <div className="sidebar_button"
-            onClick={() => navigate("/reportedissue")}
-          >
-            Reported Issue
-          </div>
-          <div className="sidebar_button"
-            onClick={() => navigate("/adminpanel")}
-          >
-            Admin Panel
-          </div>
-          <div className="sidebar_button"
-            onClick={() => navigate("/userdashboard")}
-          >
-            User Dashboard
-          </div>
-        </div>
-        <div className="botttom">
-          <div onClick={() => navigate("/settings")}>
-            Settings
-          </div>
-          <Link to="/logout">
-            <button>Logout</button>
-          </Link>
-        </div>
-      </aside>
-    </>
-  );
-};
+  const links = [
+    { icon: faTachometerAlt, label: "Dashboard", path: "/dashboard" },
+    { icon: faPlus, label: "Raise Issue", path: "/raiseissue" },
+    { icon: faExclamationCircle, label: "Reported Issue", path: "/reportedissue" },
+    { icon: faUserShield, label: "Admin Panel", path: "/adminpanel" },
+    { icon: faUser, label: "User Dashboard", path: "/userdashboard" },
+    { icon: faCog, label: "Settings", path: "/settings" },
+  ];
 
-export default Sidebar;
+  return (
+<div className=" h-screen bg-white text-black transition-all duration-300 group flex flex-col justify-center p-2 shrink-0 hover:w-55 w-20 overflow-hidden border border-zinc-200">
+  {/* Header */}
+  <div className="p-4 flex items-center space-x-3 h-14">
+    <span className="text-xl">🔐</span>
+    <span className="ml-2 text-lg font-bold transition-all duration-300 opacity-0 group-hover:opacity-100 whitespace-nowrap">
+      ProblemBox
+    </span>
+  </div>
+
+  {/* Sidebar Links */}
+  <div className="flex flex-col flex-grow px-2">
+    {links.map((link, i) => (
+      <div
+        key={i}
+        onClick={() => navigate(link.path)}
+        className="flex items-center h-12 space-x-4 cursor-pointer hover:bg-[#fff8e4] px-3 rounded-md transition-all duration-200"
+      >
+        <FontAwesomeIcon icon={link.icon} size="lg" />
+        <span className="text-sm transition-all duration-300 opacity-0 group-hover:opacity-100 whitespace-nowrap">
+          {link.label}
+        </span>
+      </div>
+    ))}
+  </div>
+
+  {/* Logout */}
+  <div className="p-3 mt-auto">
+    <div
+      onClick={handleLogout}
+      className="flex items-center h-12 space-x-4 cursor-pointer hover:bg-[#fff8e4] px-3 rounded-md transition-all duration-200"
+    >
+      <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
+      <span className="text-sm transition-all duration-300 opacity-0 group-hover:opacity-100 whitespace-nowrap">
+        Logout
+      </span>
+    </div>
+  </div>
+</div>
+
+  );
+}

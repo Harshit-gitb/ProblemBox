@@ -27,27 +27,29 @@ export const submitIssue = async (issueData, userId) => {
     tag: issueData.tag,
     priority: issueData.priority,
     status: "Open",
-    createdBy: userId,
+    createdBy: userEmail,
     createdAt: serverTimestamp(),
     upvotes: 0,
     downvotes: 0
   });
 };
 
-// Vote tracking
+// Save user vote
 export const voteOnIssue = async (issueId, userId, voteValue) => {
   await setDoc(doc(db, "votes", `${issueId}_${userId}`), {
     issueId,
     userId,
-    vote: voteValue
+    vote: voteValue,
   });
 };
 
-// Update vote counts
+
+// Update count in issue
 export const updateIssueVote = async (issueId, isUpvote) => {
   const issueRef = doc(db, "issues", issueId);
   await updateDoc(issueRef, {
     upvotes: isUpvote ? increment(1) : increment(0),
-    downvotes: !isUpvote ? increment(1) : increment(0)
+    downvotes: !isUpvote ? increment(1) : increment(0),
   });
 };
+
