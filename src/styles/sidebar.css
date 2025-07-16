@@ -33,7 +33,7 @@
   font-weight: bold;
 }
 
-.links_sidebar button:active {
+.sidebar_button:active {
   background-color: #ffffff;
 }
 .botttom button:active {

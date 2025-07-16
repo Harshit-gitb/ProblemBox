@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const navigate = useNavigate();
   const auth = getAuth(app);
-
+  const [activeLink, setActiveLink] = useState("dashboard");
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
@@ -25,36 +25,36 @@ const Sidebar = () => {
       <aside className="sidebar">
         <div className="top">ProblemBox 🔐</div>
         <div className="links_sidebar">
-          <div
+          <div className="sidebar_button"
             onClick={() => {
               navigate("/dashboard");
             }}
           >
             Dashboard
           </div>
-          <div
+          <div className="sidebar_button {activeLink === 'dashboard'"
             onClick={() => navigate("/raiseissue")}
           >
             Raise Issue
           </div>
-          <div
+          <div className="sidebar_button"
             onClick={() => navigate("/reportedissue")}
           >
             Reported Issue
           </div>
-          <div
+          <div className="sidebar_button"
             onClick={() => navigate("/adminpanel")}
           >
             Admin Panel
           </div>
-          <div
+          <div className="sidebar_button"
             onClick={() => navigate("/userdashboard")}
           >
             User Dashboard
           </div>
         </div>
         <div className="botttom">
-          <div onClick={() => setActivePage("Settings")}>
+          <div onClick={() => navigate("/settings")}>
             Settings
           </div>
           <Link to="/logout">
