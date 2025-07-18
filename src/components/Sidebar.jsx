@@ -1,4 +1,4 @@
-import React from "react";
+import {React,useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import app from "../Firebase.jsx";
@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Sidebar() {
   const navigate = useNavigate();
   const auth = getAuth(app);
-
+  const [activeLink, setActiveLink] = useState("dashboard");
   const handleLogout = () => {
     signOut(auth)
       .then(() => {

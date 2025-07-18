@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 
 function getPageTitle(pathname) {
   switch (pathname) {
@@ -17,7 +17,6 @@ function getPageTitle(pathname) {
 
 export default function Layout({ children, setshowLogin }) {
   const location = useLocation();
-
   useEffect(() => {
     const title = getPageTitle(location.pathname);
     document.title = title;
