@@ -1,9 +1,12 @@
 import profile from "../assets/profile.png";
 import { useLocation } from "react-router-dom";
 
-const Navbar = ({ setshowLogin  }) => {
+const Navbar = ({ setshowLogin,username}) => {
+  console.log(username);
+  
   const loginHandler = () => {
     setshowLogin(true); // Hide sidebar and navbar
+    alert("Login button clicked");
   };
   const currLoc = useLocation();
   const currentPath = currLoc.pathname
@@ -31,9 +34,9 @@ const Navbar = ({ setshowLogin  }) => {
           />
         </div>
         <div className="flex gap-8 items-center">
-          <h2>username</h2>
+          <h2>{username}</h2>
               <div className="w-10 h-10 rounded-full overflow-hidden cursor-pointer" onClick={loginHandler}>
-                <img
+                <img 
                   src={profile}
                   alt="Profile"
                   className="w-full h-full object-cover"
