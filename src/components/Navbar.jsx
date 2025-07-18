@@ -15,6 +15,9 @@ const Navbar = ({ setshowLogin,username}) => {
     "/": "Dashboard",
     "/raiseissue": "Raise Issue",
     "/reportedissue": "Reported Issue",
+    "/userdashboard": "User Dashboard",
+    "/adminpanel": "Admin Panel",
+    "/settings": "Settings",
   };
 
   const title = pageTitles[currentPath] || "Problem Box"
