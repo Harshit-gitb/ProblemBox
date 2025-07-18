@@ -6,7 +6,7 @@ import { setDoc, doc, addDoc, collection, updateDoc, increment, serverTimestamp 
 export const saveUserToFirestore = async (user) => {
   try {
     await setDoc(doc(db, "users", user.uid), {
-      name: user.displayName || "User",
+      name: user.displayName,
       email: user.email,
       role: "user",
       badge: "Bronze",
