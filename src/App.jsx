@@ -42,7 +42,7 @@ function App() {
         <Route path="/login" element={<Login setloggedin={setloggedin}/>} />
         <Route path="/signup" element={<Signup />} />
       <Route path="*" element={ Isloggedin ? <Page /> : <Login setloggedin={setloggedin}/>} />
-      </Routes>++
+      </Routes>
       
     </div>
   );
