@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import Login from "./Pages/Login.jsx";
-import Signup from "./Pages/Signup.jsx";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import app from "./Firebase.jsx";
+
 import Page from "./Page.jsx";
-import Dashboard from "./Pages/Dashboard.jsx";
-import Layout from './components/Layout';
-
-
+import AuthFlipCard from "./Pages/AuthFlipCard"; // ✅ updated path
 
 function App() {
   
@@ -27,28 +23,28 @@ function App() {
   }, [auth]);
 
   useEffect(() => {
-    if (Isloggedin === null) return; // Wait for auth state to be determined
+    if (Isloggedin === null) return;
 
-    const publicPaths = ["/login", "/signup"];
+    const publicPaths = ["/auth"];
     const isPublicPath = publicPaths.includes(location.pathname);
 
     if (Isloggedin && isPublicPath) {
       navigate("/", { replace: true });
     } else if (!Isloggedin && !isPublicPath) {
-      navigate("/login", { replace: true });
+      navigate("/auth", { replace: true });
     }
   }, [Isloggedin, location.pathname, navigate]);
 
   return (
-    <div >
+    <div>
       <Routes>
-        <Route path="/login" element={<Login setloggedin={setloggedin} setUsername={setUsername}/>} />
-        <Route path="/signup" element={<Signup />} />
-      <Route path="*" element={ Isloggedin ? <Page username={username} /> : <Login setloggedin={setloggedin} setUsername={setUsername}/>} />
-      </Routes>++
+        <Route path="/auth" element={<AuthFlipCard setloggedin={setloggedin} setUsername={setUsername}/>} />
+        
+      <Route path="*" element={ Isloggedin ? <Page username={username} /> : <AuthFlipCard setloggedin={setloggedin} setUsername={setUsername}/>} />
+      </Routes>
       
     </div>
   );
-} 
-  
+}
+
 export default App;
