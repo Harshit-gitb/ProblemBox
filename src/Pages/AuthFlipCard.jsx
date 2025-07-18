@@ -8,8 +8,10 @@ const auth = getAuth(app);
 
 export default function AuthFlipCard({ setloggedin,setUsername }) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const [UserName, setUserName] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); // ✅ New State
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -28,10 +30,18 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
     }
   };
 
+  
+
   const handleSignup = async (e) => {
     e.preventDefault();
+     // ✅ Check if passwords match
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password ,);
       const user = userCredential.user;
       await saveUserToFirestore(user);
       alert("Signup successful!");
@@ -61,9 +71,12 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
         <div style={{ ...styles.face, ...styles.back }}>
           <h2 style={styles.heading}>Signup</h2>
           <form onSubmit={handleSignup} style={styles.form}>
+            <input type="text" placeholder="UserName" style={styles.input} onChange={(e) => setUserName(e.target.value)} />
             <input type="email" placeholder="Email" style={styles.input} onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Password" style={styles.input} onChange={(e) => setPassword(e.target.value)} />
-            <button type="submit" style={{ ...styles.button, background: "#c9b037" }}>Sign Up</button>
+            <input type="password" placeholder="Confirm Password" style={styles.input} onChange={(e) => setConfirmPassword(e.target.value)} />
+          
+            <button style={{ ...styles.button, background: "#c9b037" }}>Sign Up</button>
           </form>
           <button onClick={() => setIsFlipped(false)} style={styles.linkBtn}>
             Already have an account? <strong>Login</strong>
