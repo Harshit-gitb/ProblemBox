@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import app from "../Firebase.jsx";
 import { saveUserToFirestore } from "../utils/firestoreHelpers.js";
 
@@ -8,7 +8,7 @@ const auth = getAuth(app);
 
 export default function AuthFlipCard({ setloggedin,setUsername }) {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [UserName, setUserName] = useState("")
+  const [name, setUserName] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,10 +17,10 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const useremail = userCredential.user.email;
-      const username = useremail.split('@')[0];
+      await signInWithEmailAndPassword(auth, email, password, name);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password, name);
+      const user = userCredential.user;
+      const username = user.displayName || name; // Use displayName or fallback to name
       setUsername(username);
       alert("Login successful!");
       setloggedin(true);
@@ -43,6 +43,7 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password ,);
       const user = userCredential.user;
+      await updateProfile(user, { displayName: name }); // Set the display name
       await saveUserToFirestore(user);
       alert("Signup successful!");
       setIsFlipped(false);
