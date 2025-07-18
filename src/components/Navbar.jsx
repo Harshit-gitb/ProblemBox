@@ -6,6 +6,7 @@ const Navbar = ({ setshowLogin,username}) => {
   
   const loginHandler = () => {
     setshowLogin(true); // Hide sidebar and navbar
+    alert("Login button clicked");
   };
   const currLoc = useLocation();
   const currentPath = currLoc.pathname
