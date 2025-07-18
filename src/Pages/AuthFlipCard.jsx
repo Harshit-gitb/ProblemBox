@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import app from "../Firebase.jsx";
 import { saveUserToFirestore } from "../utils/firestoreHelpers.js";
 
@@ -8,17 +8,19 @@ const auth = getAuth(app);
 
 export default function AuthFlipCard({ setloggedin,setUsername }) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const [name, setUserName] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const useremail = userCredential.user.email;
-      const username = userCredential.user.displayName || useremail.split('@')[0]; // Use displayName or email prefix
+      await signInWithEmailAndPassword(auth, email, password, name);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password, name);
+      const user = userCredential.user;
+      const username = user.displayName || name; // Use displayName or fallback to name
       setUsername(username);
       alert("Login successful!");
       setloggedin(true);
@@ -28,11 +30,20 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
     }
   };
 
+  
+
   const handleSignup = async (e) => {
     e.preventDefault();
+     // ✅ Check if passwords match
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password ,);
       const user = userCredential.user;
+      await updateProfile(user, { displayName: name }); // Set the display name
       await saveUserToFirestore(user);
       alert("Signup successful!");
       setIsFlipped(false);
@@ -61,9 +72,12 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
         <div style={{ ...styles.face, ...styles.back }}>
           <h2 style={styles.heading}>Signup</h2>
           <form onSubmit={handleSignup} style={styles.form}>
+            <input type="text" placeholder="UserName" style={styles.input} onChange={(e) => setUserName(e.target.value)} />
             <input type="email" placeholder="Email" style={styles.input} onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Password" style={styles.input} onChange={(e) => setPassword(e.target.value)} />
-            <button type="submit" style={{ ...styles.button, background: "#c9b037" }}>Sign Up</button>
+            <input type="password" placeholder="Confirm Password" style={styles.input} onChange={(e) => setConfirmPassword(e.target.value)} />
+          
+            <button style={{ ...styles.button, background: "#c9b037" }}>Sign Up</button>
           </form>
           <button onClick={() => setIsFlipped(false)} style={styles.linkBtn}>
             Already have an account? <strong>Login</strong>
