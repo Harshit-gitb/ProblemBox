@@ -6,7 +6,7 @@ import { saveUserToFirestore } from "../utils/firestoreHelpers.js";
 
 const auth = getAuth(app);
 
-export default function AuthFlipCard({ setloggedin }) {
+export default function AuthFlipCard({ setloggedin,setUsername }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [UserName, setUserName] = useState("")
   const [email, setEmail] = useState("");
@@ -18,6 +18,10 @@ export default function AuthFlipCard({ setloggedin }) {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const useremail = userCredential.user.email;
+      const username = useremail.split('@')[0];
+      setUsername(username);
       alert("Login successful!");
       setloggedin(true);
       navigate("/page");
