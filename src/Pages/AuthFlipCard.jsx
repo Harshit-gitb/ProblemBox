@@ -8,7 +8,7 @@ const auth = getAuth(app);
 
 export default function AuthFlipCard({ setloggedin,setUsername }) {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [UserName, setUserName] = useState("")
+  // const [UserName, setUserName] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(""); // ✅ New State
@@ -17,11 +17,11 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const useremail = userCredential.user.email;
-      const username = useremail.split('@')[0];
-      setUsername(username);
+      await signInWithEmailAndPassword(auth, email, password,username);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password,username);
+      console.log(userCredential);
+      
+      // setUsername(username);
       alert("Login successful!");
       setloggedin(true);
       navigate("/page");
