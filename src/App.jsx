@@ -7,7 +7,7 @@ import Page from "./Page.jsx";
 import AuthFlipCard from "./Pages/AuthFlipCard"; // ✅ updated path
 
 function App() {
-  
+  const [admin,setAdmin] =useState(false)
   const [username, setUsername] = useState("")
   const [Isloggedin, setloggedin] = useState(null);
   const auth = getAuth(app);
@@ -40,7 +40,7 @@ function App() {
       <Routes>
         <Route path="/auth" element={<AuthFlipCard setloggedin={setloggedin} setUsername={setUsername}/>} />
         
-      <Route path="*" element={ Isloggedin ? <Page username={username} /> : <AuthFlipCard setloggedin={setloggedin} setUsername={setUsername}/>} />
+      <Route path="*" element={ Isloggedin ? <Page username={username} admin={admin} setAdmin={setAdmin} /> : <AuthFlipCard setloggedin={setloggedin} setUsername={setUsername}/>} />
       </Routes>
       
     </div>

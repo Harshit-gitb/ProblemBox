@@ -6,16 +6,16 @@ import Raiseissue from "./Pages/Raiseissue.jsx";
 import ReportedIssue from "./Pages/ReportedIssue.jsx";
 import Adminpanel from "./Pages/Adminpanel.jsx";
 import UserDashboard from "./Pages/UserDashboard.jsx";
+import Settings from './Pages/Settings.jsx'
 import RightSidebar from './components/RightSidebar';
-
-const Main = ({ username }) => {
+const Main = ({ username,admin,setAdmin }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br  from-[#fffdf2] to-[#faecd6]">
       <div className="flex h-screen w-full">
         
         {/* Sidebar */}
         <div className="sticky top-0 h-screen z-30 bg-[#fff7e0] shadow-md">
-          <Sidebar />
+          <Sidebar setAdmin={setAdmin} admin={admin} />
         </div>
 
         {/* Main Content Area */}
@@ -29,11 +29,13 @@ const Main = ({ username }) => {
           {/* Page Routes */}
           <div className="flex-1 overflow-y-auto p-6 bg-transparent">
             <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="*" element={<h1 className='text-4xl'>Error 404: Page Not Found</h1>} />
+              <Route path="/dashboard" element={<Dashboard admin={admin} />} />
               <Route path="/raiseissue" element={<Raiseissue />} />
               <Route path="/reportedissue" element={<ReportedIssue />} /> 
-              <Route path="/adminpanel" element={<Adminpanel />} />
+              {admin && <Route path="/adminpanel" element={<Adminpanel />} />} 
               <Route path="/userdashboard" element={<UserDashboard />} />
+              <Route path="/settings" element={<Settings />} />
             </Routes>
           </div>
         </div>
@@ -42,5 +44,4 @@ const Main = ({ username }) => {
     </div>
   );
 };
-
 export default Main;
