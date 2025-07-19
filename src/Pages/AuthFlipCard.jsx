@@ -43,10 +43,12 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
     }
     
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password ,name);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password, name);
       const user = userCredential.user;
       await updateProfile(userCredential.user, { displayName: name }); // Set the display name
       await saveUserToFirestore(user);
+      const username = user.displayName || name; // Use displayName or fallback to name
+      setUsername(username);
       alert("Signup successful!");
       // setUsername(displayName)
       setIsFlipped(false);
