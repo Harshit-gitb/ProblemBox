@@ -14,9 +14,9 @@ export default function Login({ setloggedin,setUsername}) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const useremail = userCredential.user.email;
-      const username = useremail.split('@')[0];
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const useremail = userCredential.user.email;
+        const username = useremail.split('@')[0];
       setUsername(username); // Set username from email
       alert(`Login successful!`);
       setloggedin(true);
