@@ -24,7 +24,7 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
       setUsername(username);
       alert("Login successful!");
       setloggedin(true);
-      navigate("/page");
+      navigate("/dashboard");
     } catch (error) {
       alert("Login error: " + error.message);
     }
