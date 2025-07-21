@@ -5,6 +5,8 @@ import app from "./Firebase.jsx";
 
 import Page from "./Page.jsx";
 import AuthFlipCard from "./Pages/AuthFlipCard"; // ✅ updated path
+import RequireAdmin from "./utils/RequireAdmin";
+import AdminPanel from "./pages/AdminPanel";
 
 function App() {
   const [admin,setAdmin] =useState(false)
@@ -39,7 +41,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/auth" element={<AuthFlipCard setloggedin={setloggedin} setUsername={setUsername}/>} />
-        
+        <Route path="/admin" element={<RequireAdmin><AdminPanel /></RequireAdmin>} />
       <Route path="*" element={ Isloggedin ? <Page username={username} admin={admin} setAdmin={setAdmin} /> : <AuthFlipCard setloggedin={setloggedin} setUsername={setUsername}/>} />
       </Routes>
       
