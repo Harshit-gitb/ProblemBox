@@ -21,6 +21,7 @@ export const saveUserToFirestore = async (user) => {
 
 // Submit an issue
 export const submitIssue = async (issueData, userId) => {
+
   await addDoc(collection(db, "issues"), {
     title: issueData.title,
     description: issueData.description,
