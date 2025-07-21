@@ -6,15 +6,9 @@ import Raiseissue from "./Pages/Raiseissue.jsx";
 import ReportedIssue from "./Pages/ReportedIssue.jsx";
 import Adminpanel from "./Pages/Adminpanel.jsx";
 import UserDashboard from "./Pages/UserDashboard.jsx";
-<<<<<<< HEAD
-import Settings from './Pages/Settings';
-
-const Main = ({ username }) => {
-=======
 import Settings from './Pages/Settings.jsx'
 import RightSidebar from './components/RightSidebar';
 const Main = ({ username,admin,setAdmin }) => {
->>>>>>> e64daa1c624d9e8d48135655862bb49fb21af3b5
   return (
     <div className="min-h-screen bg-gradient-to-br  from-[#fffdf2] to-[#faecd6]">
       <div className="flex h-screen w-full">
@@ -42,10 +36,6 @@ const Main = ({ username,admin,setAdmin }) => {
               {admin && <Route path="/adminpanel" element={<Adminpanel />} />} 
               <Route path="/userdashboard" element={<UserDashboard />} />
               <Route path="/settings" element={<Settings />} />
-<<<<<<< HEAD
-
-=======
->>>>>>> e64daa1c624d9e8d48135655862bb49fb21af3b5
             </Routes>
           </div>
         </div>
@@ -54,8 +44,4 @@ const Main = ({ username,admin,setAdmin }) => {
     </div>
   );
 };
-<<<<<<< HEAD
-
-=======
->>>>>>> e64daa1c624d9e8d48135655862bb49fb21af3b5
 export default Main;

@@ -168,59 +168,79 @@ const AdminPanel = () => {
       )}
 
       {/* User Management */}
-      {activeTab === "users" && (
-        <>
-          <h2 className="text-2xl mb-4">👥 User Management</h2>
-          <input
-            type="text"
-            placeholder="Search users"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <div className="mt-4">
-            {filteredUsers.map((user) => (
-              <div
-                key={user.id}
-                className="bg-white shadow-md hover:shadow-lg border border-gray-200 rounded-lg p-4 mb-4 transition-all duration-300"
-              >
-                <h4 className="font-bold">{user.name || "Unnamed User"}</h4>
-                <p>{user.email}</p>
-                <p>
-                  <b>Status:</b>{" "}
-                  <select
-                    value={user.status || "Active"}
-                    onChange={(e) =>
-                      handleStatusChange(user.id, e.target.value)
-                    }
-                    className="border p-1 rounded ml-1"
-                  >
-                    <option>Active</option>
-                    <option>Inactive</option>
-                  </select>
-                </p>
-                <p>
-                  <b>Role:</b>{" "}
-                  <select
-                    value={user.role || "User"}
-                    onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                    className="border p-1 rounded ml-1"
-                  >
-                    <option>User</option>
-                    <option>Moderator</option>
-                    <option>Admin</option>
-                  </select>
-                </p>
-                <button
-                  onClick={() => handleDeleteUser(user.id)}
-                  className="mt-2 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
-                >
-                  🗑 Delete User
-                </button>
-              </div>
-            ))}
+{activeTab === "users" && (
+  <>
+    <h2 className="text-3xl font-semibold mb-4 text-gray-800">👥 User Management</h2>
+
+    <input
+      type="text"
+      placeholder="Search users…"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="
+        w-full px-6 py-3 mb-6
+        bg-white border border-gray-300 rounded-md shadow-sm
+        text-lg text-gray-700 placeholder-gray-400
+        focus:outline-none focus:ring-2 focus:ring-[#d4af37] transition"
+    />
+
+    <div className="space-y-3">
+      {filteredUsers.map((user) => (
+        <div
+          key={user.id}
+          className="
+            bg-white border border-gray-200 rounded-xl 
+            shadow-sm hover:shadow-md transition-shadow duration-300
+            p-3 flex items-center justify-between text-lg"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+            <span className="font-semibold text-gray-800">{user.name || "Unnamed User"}</span>
+            <span className="text-gray-600">{user.email}</span>
           </div>
-        </>
+
+          <div className="flex items-center space-x-3">
+            <select
+              value={user.status ?? "Active"}
+              onChange={(e) => handleStatusChange(user.id, e.target.value)}
+              className="rounded-md border-gray-300 text-lg focus:border-[#d4af37] focus:ring-[#d4af37] transition p-1"
+            >
+              <option>Active</option>
+              <option>Inactive</option>
+            </select>
+
+            <select
+              value={user.role ?? "User"}
+              onChange={(e) => handleRoleChange(user.id, e.target.value)}
+              className="rounded-md border-gray-300 text-lg focus:border-[#d4af37] focus:ring-[#d4af37] transition p-1"
+            >
+              <option>User</option>
+              <option>Moderator</option>
+              <option>Admin</option>
+            </select>
+
+            <button
+              onClick={() => handleDeleteUser(user.id)}
+              className="
+                inline-flex items-center gap-1
+                bg-[#d4af37]/20 hover:bg-[#d4af37]/30
+                text-gray-900 px-3 py-1 rounded-full text-lg
+                transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-black"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 3v1H4v2h16V4h-5V3H9zm2 5v11h2V8h-2zM7 8v11h2V8H7zM13 8v11h2V8h-2z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </>
+
       )}
     </div>
   );
