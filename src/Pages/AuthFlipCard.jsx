@@ -26,6 +26,7 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
       navigate("/dashboard");
       console.log(username);
       setloggedin(true);
+      navigate("/dashboard");
     } catch (error) {
       console.log("yha aagya login m");
       alert("Login error: " + error.message);
