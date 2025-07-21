@@ -8,6 +8,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import IssueFilter from "../components/IssueFilter";
 import app from "../Firebase.jsx";
 
 const db = getFirestore(app);
@@ -17,6 +18,7 @@ const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState("issues");
   const [issues, setIssues] = useState([]);
   const [users, setUsers] = useState([]);
+  const [sortBy, setSortBy] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -59,36 +61,25 @@ const AdminPanel = () => {
     fetchUsers();
   };
 
-  const filteredIssues = issues.filter((issue) =>
-    issue.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   const filteredUsers = users.filter((user) =>
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const Priority = () => {
-    const order = { High: 1, Medium: 2, Low: 3 };
-    const sorted = [...issues].sort((a, b) => order[a.priority] - order[b.priority]);
-    setIssues(sorted);
-  };
-
-  const Votes = () => {
-    const sorted = [...issues].sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0));
-    setIssues(sorted);
-  };
 
   return (
     <div className="text-black p-4">
       <div className="flex gap-4 mb-6">
         <button
-          className={`px-4 py-2 rounded ${activeTab === "issues" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          className={`px-4 py-2 rounded ${
+            activeTab === "issues" ? "bg-blue-500 text-white" : "bg-gray-200"
+          }`}
           onClick={() => setActiveTab("issues")}
         >
           Issue Management
         </button>
         <button
-          className={`px-4 py-2 rounded ${activeTab === "users" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          className={`px-4 py-2 rounded ${
+            activeTab === "users" ? "bg-blue-500 text-white" : "bg-gray-200"
+          }`}
           onClick={() => setActiveTab("users")}
         >
           User Management
@@ -99,36 +90,79 @@ const AdminPanel = () => {
       {activeTab === "issues" && (
         <>
           <h2 className="text-2xl mb-4">🛠 Issue Management</h2>
-          <input
-            type="text"
-            placeholder="Search issue"
-            className="p-2 m-1 w-80 border text-black"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+          <IssueFilter
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
           />
-          <button className="p-1 ml-2 bg-orange-700 text-white" onClick={Priority}>
-            Sort by Priority
-          </button>
-          <button className="p-1 ml-2 bg-red-700 text-white" onClick={Votes}>
-            Sort by Votes
-          </button>
-
           <div className="mt-4">
-            {filteredIssues.map((issue) => (
-              <div key={issue.id} className="bg-white border p-4 mb-4 rounded-lg">
-                <h4 className="font-bold">{issue.title}</h4>
-                <p>{issue.description}</p>
-                <p><b>Priority:</b> {issue.priority}</p>
-                <p><b>Tag:</b> {issue.tag}</p>
-                <p><b>Status:</b> {issue.status || "Pending"}</p>
-                <div className="flex gap-2 mt-2">
-                  <button onClick={() => updateStatus(issue.id, "Resolved")} className="bg-green-300 px-2 py-1 rounded-lg">Resolve</button>
-                  <button onClick={() => updateStatus(issue.id, "In Progress")} className="bg-blue-300 px-2 py-1 rounded-lg">In Progress</button>
-                  <button onClick={() => updateStatus(issue.id, "Rejected")} className="bg-red-300 px-2 py-1 rounded-lg">Reject</button>
-                  <button onClick={() => deleteIssue(issue.id)} className="bg-red-500 px-2 py-1 text-white rounded-lg">Delete</button>
+            {[...issues]
+              .filter((issue) =>
+                issue.title.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              .sort((a, b) => {
+                if (sortBy === "votes") {
+                  const votesA = (a.upvotes || 0) - (a.downvotes || 0);
+                  const votesB = (b.upvotes || 0) - (b.downvotes || 0);
+                  return votesB - votesA;
+                }
+                if (sortBy === "priority") {
+                  const priorityOrder = { High: 3, Medium: 2, Low: 1 };
+                  return (
+                    (priorityOrder[b.priority] || 0) -
+                    (priorityOrder[a.priority] || 0)
+                  );
+                }
+                if (sortBy === "recent") {
+                  return new Date(b.reportedAt) - new Date(a.reportedAt);
+                }
+                return 0;
+              })
+              .map((issue) => (
+                <div
+                  key={issue.id}
+                  className="bg-white shadow-md hover:shadow-lg border border-gray-200 rounded-lg p-4 mb-4 transition-all duration-300"
+                >
+                  <h4 className="font-bold">{issue.title}</h4>
+                  <p>{issue.description}</p>
+                  <p>
+                    <b>Priority:</b> {issue.priority}
+                  </p>
+                  <p>
+                    <b>Tag:</b> {issue.tag}
+                  </p>
+                  <p>
+                    <b>Status:</b> {issue.status || "Pending"}
+                  </p>
+                  <div className="flex gap-2 mt-2">
+                    <button
+                      className="bg-green-100 hover:bg-green-200 text-green-800 font-medium px-3 py-1 rounded-lg text-sm"
+                      onClick={() => updateStatus(issue.id, "Resolved")}
+                    >
+                      ✅ Resolve
+                    </button>
+                    <button
+                      className="bg-blue-100 hover:bg-blue-200 text-blue-800 font-medium px-3 py-1 rounded-lg text-sm"
+                      onClick={() => updateStatus(issue.id, "In Progress")}
+                    >
+                      ⏳ In Progress
+                    </button>
+                    <button
+                      className="bg-yellow-100 hover:bg-yellow-200 text-yellow-800 font-medium px-3 py-1 rounded-lg text-sm"
+                      onClick={() => updateStatus(issue.id, "Rejected")}
+                    >
+                      ❌ Reject
+                    </button>
+                    <button
+                      className="bg-red-500 hover:bg-red-600 text-white font-medium px-3 py-1 rounded-lg text-sm"
+                      onClick={() => deleteIssue(issue.id)}
+                    >
+                      🗑 Delete
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </>
       )}
@@ -140,20 +174,25 @@ const AdminPanel = () => {
           <input
             type="text"
             placeholder="Search users"
-            className="p-2 m-1 w-80 border text-black"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <div className="mt-4">
             {filteredUsers.map((user) => (
-              <div key={user.id} className="bg-white border p-4 mb-4 rounded-lg">
+              <div
+                key={user.id}
+                className="bg-white shadow-md hover:shadow-lg border border-gray-200 rounded-lg p-4 mb-4 transition-all duration-300"
+              >
                 <h4 className="font-bold">{user.name || "Unnamed User"}</h4>
                 <p>{user.email}</p>
                 <p>
                   <b>Status:</b>{" "}
                   <select
                     value={user.status || "Active"}
-                    onChange={(e) => handleStatusChange(user.id, e.target.value)}
+                    onChange={(e) =>
+                      handleStatusChange(user.id, e.target.value)
+                    }
                     className="border p-1 rounded ml-1"
                   >
                     <option>Active</option>
@@ -172,8 +211,11 @@ const AdminPanel = () => {
                     <option>Admin</option>
                   </select>
                 </p>
-                <button onClick={() => handleDeleteUser(user.id)} className="mt-2 bg-red-500 text-white px-3 py-1 rounded">
-                  Delete User
+                <button
+                  onClick={() => handleDeleteUser(user.id)}
+                  className="mt-2 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
+                >
+                  🗑 Delete User
                 </button>
               </div>
             ))}

@@ -8,7 +8,7 @@ const auth = getAuth(app);
 
 export default function AuthFlipCard({ setloggedin,setUsername }) {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [name, setUserName] = useState("")
+  // const [name, setUserName] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,15 +17,21 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password, name);
-      const userCredential = await signInWithEmailAndPassword(auth, email, password, name);
+      await signInWithEmailAndPassword(auth, email, password,name);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password,name);
       const user = userCredential.user;
-      const username = user.displayName || name; // Use displayName or fallback to name
-      setUsername(username);
+      const username = user.displayName || name // Use displayName or fallback to name
       alert("Login successful!");
-      setloggedin(true);
+      setUsername(username);
       navigate("/dashboard");
+      console.log(username);
+      setloggedin(true);
+<<<<<<< HEAD
+      navigate("/dashboard");
+=======
+>>>>>>> e64daa1c624d9e8d48135655862bb49fb21af3b5
     } catch (error) {
+      console.log("yha aagya login m");
       alert("Login error: " + error.message);
     }
   };
@@ -41,13 +47,17 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
     }
     
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password ,);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password, name);
       const user = userCredential.user;
-      await updateProfile(user, { displayName: name }); // Set the display name
+      await updateProfile(userCredential.user, { displayName: name }); // Set the display name
       await saveUserToFirestore(user);
+      const username = user.displayName || name; // Use displayName or fallback to name
+      setUsername(username);
       alert("Signup successful!");
+      // setUsername(displayName)
       setIsFlipped(false);
     } catch (error) {
+      console.log("yaha aagya");
       alert("Signup error: " + error.message);
     }
   };

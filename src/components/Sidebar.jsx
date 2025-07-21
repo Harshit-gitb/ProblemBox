@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function Sidebar() {
+export default function Sidebar({setAdmin,admin}) {
   const navigate = useNavigate();
   const auth = getAuth(app);
   const [activeLink, setActiveLink] = useState("dashboard");
@@ -30,10 +30,10 @@ export default function Sidebar() {
     { icon: faTachometerAlt, label: "Dashboard", path: "/dashboard" },
     { icon: faPlus, label: "Raise Issue", path: "/raiseissue" },
     { icon: faExclamationCircle, label: "Reported Issue", path: "/reportedissue" },
-    { icon: faUserShield, label: "Admin Panel", path: "/adminpanel" },
     { icon: faUser, label: "User Dashboard", path: "/userdashboard" },
+    admin && {icon: faUserShield, label: "Admin Panel", path: "/adminpanel" },
     { icon: faCog, label: "Settings", path: "/settings" },
-  ];
+  ].filter(Boolean); 
 
   return (
 <div className=" h-screen bg-white text-black transition-all duration-300 group flex flex-col justify-center p-2 shrink-0 hover:w-55 w-20 overflow-hidden border border-zinc-200">
@@ -70,6 +70,16 @@ export default function Sidebar() {
       <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
       <span className="text-sm transition-all duration-300 opacity-0 group-hover:opacity-100 whitespace-nowrap">
         Logout
+      </span>
+    </div>
+    <div
+      onClick={() => setAdmin(true)}
+      onDoubleClick={() => setAdmin(false)}
+      className="flex items-center h-12 space-x-4 cursor-pointer hover:bg-[#fff8e4] px-3 rounded-md transition-all duration-200"
+    >
+      <FontAwesomeIcon icon={faUserShield} size="lg" />
+      <span className="text-sm transition-all duration-300 opacity-0 group-hover:opacity-100 whitespace-nowrap">
+        Change Admin Status
       </span>
     </div>
   </div>
