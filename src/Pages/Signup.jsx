@@ -21,7 +21,7 @@ export default function Signup() {
       console.log("User created:", user);
       await saveUserToFirestore(user);
       alert("Signup successful!");
-      navigate('/login')
+      navigate('/login]')
     } catch (error) {
       alert("Signup error: " + error.message);
     }

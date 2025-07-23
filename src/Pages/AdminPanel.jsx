@@ -209,13 +209,12 @@ const AdminPanel = () => {
             </select>
 
             <select
-              value={user.role ?? "User"}
+              value={user.role ?? "user"}
               onChange={(e) => handleRoleChange(user.id, e.target.value)}
               className="rounded-md border-gray-300 text-lg focus:border-[#d4af37] focus:ring-[#d4af37] transition p-1"
             >
-              <option>User</option>
-              <option>Moderator</option>
-              <option>Admin</option>
+              <option>user</option>
+              <option>admin</option>
             </select>
 
             <button
