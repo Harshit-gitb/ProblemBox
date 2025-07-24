@@ -1,4 +1,3 @@
-// src/utils/firestoreHelpers.js
 import { db } from "../Firebase";
 import { setDoc, doc, addDoc, collection, updateDoc, increment, serverTimestamp } from "firebase/firestore";
 
