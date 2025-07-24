@@ -153,7 +153,7 @@ const Raiseissue = () => {
             </label>
             <button
               type="button"
-              onClick={() => document.getElementById("imageUpload")?.click()}
+              onClick= {() => document.getElementById("imageUpload")?.click()}
               className="mt-2 px-4 py-2 bg-white border border-[#f5e7c5] text-[#5c4a23] rounded-md hover:bg-[#f5e7c5] transition-all"
             >
               Choose Files

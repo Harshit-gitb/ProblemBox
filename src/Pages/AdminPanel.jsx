@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAuth } from "firebase/auth";
+import { getAuth ,getFunctions, httpsCallable }from "firebase/auth";
 import {
   getFirestore,
   collection,
@@ -13,6 +13,7 @@ import app from "../Firebase.jsx";
 
 const db = getFirestore(app);
 const auth = getAuth(app);
+
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState("issues");
@@ -57,9 +58,10 @@ const AdminPanel = () => {
   };
 
   const handleDeleteUser = async (id) => {
-    await deleteDoc(doc(db, "users", id));
-    fetchUsers();
-  };
+    const functions = getFunctions();
+  const deleteFn = httpsCallable(functions, "deleteUserAccount");
+  await deleteFn({ id });
+  fetchUsers(); };
 
   const filteredUsers = users.filter((user) =>
     user.email.toLowerCase().includes(searchTerm.toLowerCase())

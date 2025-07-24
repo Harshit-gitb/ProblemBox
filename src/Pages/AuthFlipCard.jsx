@@ -54,7 +54,6 @@ export default function AuthFlipCard({ setloggedin,setUsername }) {
       // setUsername(displayName)
       setIsFlipped(false);
     } catch (error) {
-      console.log("yaha aagya");
       alert("Signup error: " + error.message);
     }
   };
