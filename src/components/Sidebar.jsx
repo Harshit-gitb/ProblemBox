@@ -26,7 +26,7 @@ export default function Sidebar({ setAdmin, admin }) {
       if (user) {
         const userDoc = await getDoc(doc(db, "users", user.uid));
         const userData = userDoc.data();
-        setAdmin(userData?.role === "admin");
+        setAdmin(userData?.role === "Admin");
       } else {
         setAdmin(false);
       }
