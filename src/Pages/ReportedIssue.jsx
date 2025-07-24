@@ -218,10 +218,29 @@ export default function ReportedIssue() {
                   <div className="text-sm text-gray-600 flex items-center flex-wrap gap-2">
                     <span>
                       🧑 Reported by{" "}
-                      <strong>{issue.reportedBy || "Unknown"}</strong>
+                      <strong>{issue.createdBy || "Unknown"}</strong>
                     </span>
-                    <span>· ⏱ {issue.reportedAt || "Just now"}</span>
-                    <span>· 💬 {issue.commentsCount || 0} comments</span>
+                    <span>
+                      · ⏱ {issue.createdAt?.toDate().toLocaleString()}
+                    </span>
+                    {issue.image && (
+                      <div className="relative group w-8 h-8">
+                        <img
+                          src={issue.image}
+                          alt="Issue"
+                          className="w-8 h-8 object-cover rounded cursor-pointer"
+                        />
+
+                        {/* Hover Preview */}
+                        <div className="absolute z-50 hidden group-hover:flex w-48 h-48 border border-gray-300 shadow-xl rounded bg-white p-1 top-[-10rem] left-1/2 -translate-x-1/2">
+                          <img
+                            src={issue.image}
+                            alt="Issue Preview"
+                            className="w-full h-full object-contain rounded"
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 

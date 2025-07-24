@@ -5,13 +5,12 @@ import { setDoc, doc, addDoc, collection, updateDoc, increment, serverTimestamp 
 export const saveUserToFirestore = async (user) => {
   try {
     await setDoc(doc(db, "users", user.uid), {
-      name: user.displayName,
+      name: user.displayName || "User",
       email: user.email,
       role: "user",
       badge: "Bronze",
-      resolvedCount: 0,
     });
-    console.log("User saved to Firestore!");
+    console.log("✅ User saved to Firestore!");
   } catch (err) {
     console.error("❌ Error saving user:", err);
   }
@@ -19,7 +18,7 @@ export const saveUserToFirestore = async (user) => {
 
 
 // Submit an issue
-export const submitIssue = async (issueData, userId) => {
+export const submitIssue = async (issueData, userEmail) => {
 
   await addDoc(collection(db, "issues"), {
     title: issueData.title,
@@ -28,6 +27,8 @@ export const submitIssue = async (issueData, userId) => {
     priority: issueData.priority,
     status: "Open",
     createdBy: userEmail,
+    image: issueData.image,
+    location: issueData.location,
     createdAt: serverTimestamp(),
     upvotes: 0,
     downvotes: 0
